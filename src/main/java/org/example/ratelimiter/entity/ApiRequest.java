@@ -15,4 +15,28 @@ public class ApiRequest {
 
     public ApiRequest () {}
 
+    public ApiRequest (String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public String getApiKey() {
+        return this.apiKey;
+    }
+
+    public LocalDateTime getTimestamp() {
+        return this.timestamp;
+    }
+
+    public void setApiKey(String apiKey) {
+        this.apiKey = apiKey;
+    }
+
+    public void setTimestamp(LocalDateTime timestamp) {
+        this.timestamp = timestamp;
+    }
+
 }
