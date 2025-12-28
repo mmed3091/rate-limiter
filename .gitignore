@@ -60,3 +60,7 @@ build/
 
 todo.txt
 notes.txt
+
+# Application properties
+application.properties
+application.yml
