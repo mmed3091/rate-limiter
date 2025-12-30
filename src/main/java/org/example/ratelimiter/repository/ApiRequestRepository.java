@@ -32,9 +32,5 @@ public class ApiRequestRepository {
             System.err.println("Error inserting request: " + e.getMessage());
             return 0;
         }
-
     }
-
-
-
 }
