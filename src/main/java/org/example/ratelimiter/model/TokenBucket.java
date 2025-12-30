@@ -34,7 +34,7 @@ public class TokenBucket {
      *
      * @return
      */
-    public int handleRequest() {
+    public int handleRequest(long tokens) {
 
         // calculate time passed since last request in seconds
         Duration duration  = Duration.between(this.lastRequestTime, LocalDateTime.now());
@@ -47,11 +47,11 @@ public class TokenBucket {
         this.lastRequestTime = LocalDateTime.now();
 
         // check if enough tokens to accept request
-        if (this.tokens >= 1) {
-            this.tokens -= 1;
+        if (this.tokens >= tokens) {
+            this.tokens -= tokens;
             return 1; // accept
         } else {
-            return 0; // reject
+            return -1; // reject
         }
     }
 
