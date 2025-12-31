@@ -1,11 +1,8 @@
 package org.example.ratelimiter.model;
 
-import org.springframework.cglib.core.Local;
-
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.Collections;
+
 
 
 
@@ -13,7 +10,7 @@ public class TokenBucket {
 
     private int capacity;
     private int refillRate;
-    private long tokens;
+    private int tokens;
     private LocalDateTime lastRequestTime;
 
     /**
@@ -31,28 +28,27 @@ public class TokenBucket {
         this.lastRequestTime = LocalDateTime.now(); // time of the last request
     }
     /**
-     *
-     * @return
+     * @param requestedTokens number of tokens needed
+     * @return number of tokens granted
      */
-    public int handleRequest(long tokens) {
+    public int handleRequest(int requestedTokens) {
 
         // calculate time passed since last request in seconds
         Duration duration  = Duration.between(this.lastRequestTime, LocalDateTime.now());
         long timePassed = duration.getSeconds();
 
         // refill tokens
-        this.tokens = Math.min(this.capacity, this.tokens + (timePassed * this.refillRate));
+        this.tokens = (int) Math.min(this.capacity, this.tokens + (timePassed * this.refillRate));
 
         // set new lastRequestTime
         this.lastRequestTime = LocalDateTime.now();
 
-        // check if enough tokens to accept request
-        if (this.tokens >= tokens) {
-            this.tokens -= tokens;
-            return 1; // accept
-        } else {
-            return -1; // reject
-        }
+        // decide how many tokens to grant
+        int grantedTokens = Math.min(requestedTokens, this.tokens);
+        this.tokens -= grantedTokens;
+        return grantedTokens;
+
+
     }
 
 

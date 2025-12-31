@@ -69,7 +69,7 @@ public class TokenBucketTest {
     @Test
     void handleRequestAcceptTest() {
         TokenBucket tb = new TokenBucket(10, 5);
-        assertEquals(1, tb.handleRequest(10));
+        assertEquals(10, tb.handleRequest(10));
     }
 
     @Test
@@ -83,7 +83,7 @@ public class TokenBucketTest {
     @Test
     void handleRequestRejectTest() {
         TokenBucket tb = new TokenBucket(10, 5);
-        assertEquals(-1, tb.handleRequest(11));
+        assertEquals(10, tb.handleRequest(11));
     }
 
     @Test
@@ -92,21 +92,21 @@ public class TokenBucketTest {
         for(int i = 0; i < 10; i++) {
             tb.handleRequest(1);
         }
-        assertEquals(-1, tb.handleRequest(11));
+        assertEquals(0, tb.handleRequest(11));
     }
 
     @Test
     void handleRequestAcceptAndRejectTest() {
         TokenBucket tb = new TokenBucket(10, 5);
-        assertEquals(1, tb.handleRequest(10));
-        assertEquals(-1, tb.handleRequest(1));
+        assertEquals(10, tb.handleRequest(10));
+        assertEquals(0, tb.handleRequest(1));
     }
 
     @Test
     void handleRequestRejectAndAcceptTest() {
         TokenBucket tb = new TokenBucket(10, 5);
-        assertEquals(-1, tb.handleRequest(11));
-        assertEquals(1, tb.handleRequest(10));
+        assertEquals(10, tb.handleRequest(11));
+        assertEquals(0, tb.handleRequest(10));
     }
 
 
