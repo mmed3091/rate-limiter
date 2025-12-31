@@ -4,19 +4,23 @@ import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.example.ratelimiter.service.ApiRequestService;
 import org.example.ratelimiter.service.RateLimiterService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 @Component
 public class RateLimitFilter extends OncePerRequestFilter {
 
     private final RateLimiterService limiter;
+    private final ApiRequestService service;
 
-    public RateLimitFilter(RateLimiterService limiter) {
+    public RateLimitFilter(RateLimiterService limiter, ApiRequestService service) {
         this.limiter = limiter;
+        this.service = service;
     }
 
     @Override
@@ -30,8 +34,11 @@ public class RateLimitFilter extends OncePerRequestFilter {
 
         // process the request through rate limiter
         if(limiter.tryAcquireTokens(apiKey, 1) == 0) {
-            response.setStatus(429); // reject request
-            response.getWriter().write("Too many requests.");
+
+            // reject request and log request information in database
+            service.logRejectedRequest(apiKey, LocalDateTime.now());
+            response.setStatus(429);
+            response.getWriter().write("Too many requests.\n");
             return;
         }
 

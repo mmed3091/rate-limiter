@@ -1,9 +1,9 @@
 package org.example.ratelimiter.model;
 
+import org.springframework.cglib.core.Local;
+
 import java.time.Duration;
 import java.time.LocalDateTime;
-
-
 
 
 public class TokenBucket {
@@ -47,10 +47,7 @@ public class TokenBucket {
         int grantedTokens = Math.min(requestedTokens, this.tokens);
         this.tokens -= grantedTokens;
         return grantedTokens;
-
-
     }
-
 
     public long getTokens() {
         return this.tokens;

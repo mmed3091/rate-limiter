@@ -4,7 +4,7 @@ import java.time.LocalDateTime;
 
 
 @Entity
-@Table(name = "api_requests")
+@Table(name = "rejected_api_requests")
 public class ApiRequest {
 
     @Id // primary key

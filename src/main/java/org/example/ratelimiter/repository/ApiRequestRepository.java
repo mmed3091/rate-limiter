@@ -20,10 +20,9 @@ public class ApiRequestRepository {
         this.template = template;
     }
 
-
     @Transactional
     public int addRequest(String apiKey, LocalDateTime timestamp) {
-        String sql = "INSERT INTO api_requests (api_key, \"timestamp\") VALUES (?, ?)";
+        String sql = "INSERT INTO rejected_api_requests (api_key, \"timestamp\") VALUES (?, ?)";
 
         try{
             return template.update(sql, apiKey, timestamp);

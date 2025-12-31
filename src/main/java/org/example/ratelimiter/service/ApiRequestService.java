@@ -14,11 +14,8 @@ public class ApiRequestService {
         this.repository = repository;
     }
 
-    public int addRequest(String apiKey, LocalDateTime timestamp) {
-
-        int rows = this.repository.addRequest(apiKey, timestamp);
-        System.out.println("Inserted rows: " + rows);
-        return rows;
+    public int logRejectedRequest(String apiKey, LocalDateTime timestamp) {
+        return this.repository.addRequest(apiKey, timestamp);
     }
 
 }
