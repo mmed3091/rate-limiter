@@ -16,7 +16,7 @@ A backend service implementing a rate limiter to control API usage and ensure sy
 ---
 
 ## How to Run 
-Clone the repository:  
+Clone the repository  
 ```bash
 git clone https://github.com/mmed3091/rate-limiter.git
 ```
