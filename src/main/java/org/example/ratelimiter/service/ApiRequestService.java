@@ -16,6 +16,8 @@ public class ApiRequestService {
 
     public int logRejectedRequest(String apiKey, LocalDateTime timestamp) {
         return this.repository.addRequest(apiKey, timestamp);
+
+        //TODO: handle error case from the addRequest method
     }
 
 }
